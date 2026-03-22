@@ -1,0 +1,5 @@
+ARF qFlipper — full offline installer
+
+This package includes all program files on disk (no download during install). You can install without internet.
+
+After installation, launch ARF qFlipper from the Start menu or the optional desktop shortcut.
