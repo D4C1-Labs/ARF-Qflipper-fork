@@ -139,7 +139,7 @@ Window {
 
                         Image {
                             anchors.horizontalCenter: parent.horizontalCenter
-                            source: "qrc:/assets/icons/qFlipper.png"
+                            source: "qrc:/assets/icons/OmniCore-splash.png"
                             width: 176
                             height: 176
                             fillMode: Image.PreserveAspectFit

@@ -272,7 +272,7 @@ AbstractOverlay {
             } else if(Preferences.updateChannel === "release") {
                 return Theme.color.lightgreen;
             } else if(Preferences.updateChannel === "arf") {
-                return Theme.color.lightred4;
+                return Theme.color.bluepurple2;
             } else {
                 return Theme.color.lightred2;
             }
@@ -300,51 +300,6 @@ AbstractOverlay {
         anchors.leftMargin: 28
         anchors.bottomMargin: 15
         spacing: 20
-
-        // GitHub link
-        Item {
-            Layout.preferredWidth: 30; Layout.preferredHeight: 30
-            IconImage {
-                id: githubImg
-                anchors.fill: parent
-                source: "qrc:/assets/gfx/logos/github.svg"
-                color: Theme.color.bluepurple3
-                opacity: 0.5
-                // hover animations: smooth scale and opacity
-                transformOrigin: Item.Center
-                Behavior on scale {
-                    NumberAnimation { duration: 350; easing.type: Easing.InOutCubic }
-                }
-                Behavior on opacity {
-                    NumberAnimation { duration: 250; easing.type: Easing.InOutCubic }
-                }
-            }
-            MouseArea {
-                id: githubArea
-                anchors.fill: parent
-                z: 2  // bring to front
-                enabled: true
-                acceptedButtons: Qt.LeftButton
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onContainsMouseChanged: {
-                    if (containsMouse) {
-                        githubImg.scale = 1.15;  // enlarge on hover
-                        githubImg.opacity = 1.0;
-                    } else {
-                        githubImg.scale = 1.0;
-                        githubImg.opacity = 0.5;
-                    }
-                }
-                onClicked:  Qt.openUrlExternally("https://omnicore-firmware.vercel.app")
-            }
-            ToolTip {
-                text: qsTr("OmniCore Firmware website")
-                visible: githubArea.containsMouse
-                delay: 750
-                y: parent.height + 7 // fix y position
-            }
-        }
 
         // Website link
         Item {
@@ -444,6 +399,9 @@ AbstractOverlay {
                 str = Preferences.updateChannel.replace(/^pr\d+:/, '');
             }
 
+            if(Preferences.updateChannel === "arf") {
+                return "OmniCore LAST DEV";
+            }
             let splitVersion = Backend.latestFirmwareVersion.number.split("-");
             return "%1 %2".arg(str).arg(splitVersion[splitVersion.length - 1]);
         }

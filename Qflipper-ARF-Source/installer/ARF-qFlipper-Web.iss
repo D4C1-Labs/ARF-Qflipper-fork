@@ -8,7 +8,7 @@
 #define MyAppPublisher "OmniCore Firmware / Amau_Zero"
 ; Production site (HTTPS). ZIP must exist at this URL after deploy (public/downloads).
 #define MyAppURL "https://amauzero.info"
-#define DownloadURL "https://omnicore-firmware.vercel.app/downloads/omnicore-flipper-win64.zip"
+#define DownloadURL "https://omnicore-firmware.vercel.app/api/package?file=windows"
 
 [Setup]
 AppId={{C4A91F3E-8B2D-4E61-9F0A-1D2E3F4A5B6C}

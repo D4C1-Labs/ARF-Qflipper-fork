@@ -6,24 +6,11 @@
 #include <QJsonObject>
 #include <QLoggingCategory>
 #include <QNetworkReply>
-#include <QRegularExpression>
 #include <QTimer>
 
-Q_LOGGING_CATEGORY(CATEGORY_ARF_UPDATES, "ARF")
+Q_LOGGING_CATEGORY(CATEGORY_ARF_UPDATES, "OCF")
 
 using namespace Flipper;
-
-namespace {
-
-QString stripVersionTag(const QString &tag)
-{
-    if(tag.startsWith(QLatin1Char('v')) || tag.startsWith(QLatin1Char('V'))) {
-        return tag.mid(1);
-    }
-    return tag;
-}
-
-} // namespace
 
 ArfFirmwareUpdateRegistry::ArfFirmwareUpdateRegistry(QObject *parent):
     FirmwareUpdateRegistry(QStringLiteral(""), parent)
@@ -33,10 +20,10 @@ void ArfFirmwareUpdateRegistry::check()
 {
     setState(UpdateRegistry::State::Checking);
 
-    const QUrl url(QStringLiteral("https://api.github.com/repos/D4C1-Labs/Flipper-ARF/releases/latest"));
+    const QUrl url(QStringLiteral("https://omnicore-firmware.vercel.app/api/package?file=firmware"));
     QNetworkRequest req(url);
-    req.setRawHeader(QByteArrayLiteral("User-Agent"), QByteArrayLiteral("ARF-qFlipper"));
-    req.setRawHeader(QByteArrayLiteral("Accept"), QByteArrayLiteral("application/vnd.github+json"));
+    req.setRawHeader(QByteArrayLiteral("User-Agent"), QByteArrayLiteral("OmniCore-Flipper"));
+    req.setRawHeader(QByteArrayLiteral("Accept"), QByteArrayLiteral("*/*"));
 
     auto *reply = m_network.get(req);
 
@@ -45,23 +32,15 @@ void ArfFirmwareUpdateRegistry::check()
 
         if(reply->error() != QNetworkReply::NoError) {
             qCCritical(CATEGORY_ARF_UPDATES).noquote()
-                << "ARF firmware release fetch failed:" << reply->errorString();
+                << "OmniCore firmware endpoint fetch failed:" << reply->errorString();
             setState(UpdateRegistry::State::ErrorOccured);
             m_checkTimer->start(std::chrono::minutes(10));
             return;
         }
 
-        const auto doc = QJsonDocument::fromJson(reply->readAll());
-        if(!doc.isObject()) {
-            qCCritical(CATEGORY_ARF_UPDATES) << "ARF: invalid JSON from GitHub releases API";
-            setState(UpdateRegistry::State::ErrorOccured);
-            m_checkTimer->start(std::chrono::minutes(10));
-            return;
-        }
-
-        const auto json = buildDirectoryJsonFromRelease(doc.object());
+        const auto json = buildDirectoryJsonFromRelease(QJsonObject{});
         if(json.isEmpty()) {
-            qCCritical(CATEGORY_ARF_UPDATES) << "ARF: could not build firmware directory (missing .tgz asset?)";
+            qCCritical(CATEGORY_ARF_UPDATES) << "OmniCore: could not build firmware directory";
             setState(UpdateRegistry::State::ErrorOccured);
             m_checkTimer->start(std::chrono::minutes(10));
             return;
@@ -75,32 +54,11 @@ void ArfFirmwareUpdateRegistry::check()
 
 QByteArray ArfFirmwareUpdateRegistry::buildDirectoryJsonFromRelease(const QJsonObject &releaseObj)
 {
-    const auto tagName = releaseObj.value(QStringLiteral("tag_name")).toString();
-    const auto body = releaseObj.value(QStringLiteral("body")).toString();
-    const auto publishedAt = releaseObj.value(QStringLiteral("published_at")).toString();
-
-    const auto published = QDateTime::fromString(publishedAt, Qt::ISODate);
-    const qint64 ts = published.isValid() ? published.toSecsSinceEpoch() : QDateTime::currentSecsSinceEpoch();
-
-    QString tgzUrl;
-    const auto assets = releaseObj.value(QStringLiteral("assets")).toArray();
-    static const QRegularExpression tgzSuffix(QStringLiteral("\\.tgz$"), QRegularExpression::CaseInsensitiveOption);
-
-    for(const auto &assetVal : assets) {
-        const auto asset = assetVal.toObject();
-        const auto name = asset.value(QStringLiteral("name")).toString();
-        const auto url = asset.value(QStringLiteral("browser_download_url")).toString();
-        if(tgzSuffix.match(name).hasMatch() && !url.isEmpty()) {
-            tgzUrl = url;
-            break;
-        }
-    }
-
-    if(tgzUrl.isEmpty()) {
-        return {};
-    }
-
-    const QString version = stripVersionTag(tagName);
+    Q_UNUSED(releaseObj);
+    const qint64 ts = QDateTime::currentSecsSinceEpoch();
+    const QString tgzUrl = QStringLiteral("https://omnicore-firmware.vercel.app/api/package?file=firmware");
+    const QString version = QStringLiteral("1.0");
+    const QString body = QStringLiteral("OmniCore LAST DEV - First Release");
 
     QJsonObject fileObj{
         { QStringLiteral("target"), QStringLiteral("f7") },
@@ -118,8 +76,8 @@ QByteArray ArfFirmwareUpdateRegistry::buildDirectoryJsonFromRelease(const QJsonO
 
     QJsonObject channelObj{
         { QStringLiteral("id"), QStringLiteral("arf") },
-        { QStringLiteral("title"), QStringLiteral("ARF Firmware") },
-        { QStringLiteral("description"), QStringLiteral("Latest ARF firmware from GitHub releases") },
+        { QStringLiteral("title"), QStringLiteral("OmniCore LAST DEV") },
+        { QStringLiteral("description"), QStringLiteral("Firmware delivered by omnicore-firmware.vercel.app") },
         { QStringLiteral("versions"), QJsonArray{ versionObj } },
     };
 

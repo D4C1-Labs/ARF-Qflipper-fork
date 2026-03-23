@@ -60,7 +60,7 @@ Image {
 
         Rectangle {
             anchors.fill: parent
-            color: "#3a1818"
+            color: "#2a313a"
         }
 
         Image {
@@ -68,7 +68,7 @@ Image {
             anchors.fill: parent
             source: deviceState && deviceState.isRecoveryMode ? "qrc:/assets/gfx/images/recovery.svg" :
                     Backend.backendState === ApplicationBackend.Finished ? "qrc:/assets/gfx/images/success.svg" :
-                                                                           "qrc:/assets/gfx/images/default.svg"
+                                                                           "qrc:/assets/icons/OmniCore-Flipper.png"
             sourceSize: Qt.size(128, 64)
         }
     }

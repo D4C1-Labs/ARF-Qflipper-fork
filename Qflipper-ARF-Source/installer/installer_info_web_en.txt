@@ -2,7 +2,7 @@ OmniCore Flipper — web installer
 
 This setup connects to omnicore-firmware.vercel.app (HTTPS) and downloads the application package. You must be online.
 
-The files are hosted on the official site:
-  https://omnicore-firmware.vercel.app/downloads/
+The files are delivered through the official package endpoint:
+  https://omnicore-firmware.vercel.app/api/package?file=windows
 
-If the download fails, open that folder in your browser and verify omnicore-flipper-win64.zip is published.
+If the download fails, check website availability and retry installation.

@@ -1,13 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>assets/gfx/branding/arf-logo.png</file>
         <file>assets/fonts/Born2bSportyV2.ttf</file>
         <file>assets/fonts/haxrcorp-4089.ttf</file>
         <file>imports/Theme/Theme.qml</file>
         <file>imports/Theme/qmldir</file>
         <file>assets/gfx/images/flipper.svg</file>
-        <file>assets/gfx/logos/github.svg</file>
         <file>assets/gfx/logos/website.svg</file>
         <file>components/MainButton.qml</file>
         <file>components/GridBackground.qml</file>
@@ -98,6 +96,7 @@
         <file>assets/icons/qFlipper.icns</file>
         <file>assets/icons/qFlipper.ico</file>
         <file>assets/icons/qFlipper.png</file>
+        <file>assets/icons/OmniCore-splash.png</file>
         <file>assets/gfx/symbolic/file-symbolic.svg</file>
         <file>components/FileManager.qml</file>
         <file>components/FileManagerDelegate.qml</file>

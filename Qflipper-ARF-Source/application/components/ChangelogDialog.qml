@@ -9,71 +9,40 @@ CustomDialog {
 
     closable: true
     invertTitle: true
-    title: qsTr("OmniCore Firmware — commit history")
-
-    onOpened: Backend.refreshArfCommitLog()
+    title: qsTr("OmniCore LAST DEV")
 
     contentWidget: Item {
         implicitWidth: control.width - 70
         implicitHeight: control.height - 160
 
-        BusyIndicator {
-            id: busy
-            anchors.centerIn: parent
-            running: Backend.arfCommitsRefreshing
-            visible: Backend.arfCommitsRefreshing
-            width: 48
-            height: 48
-        }
-
-        ScrollView {
-            id: scroll
+        Column {
             anchors.fill: parent
-            visible: !Backend.arfCommitsRefreshing
-            clip: true
+            spacing: 10
 
-            ListView {
-                id: listView
-                model: Backend.arfCommitLog
-                spacing: 12
-
-                delegate: Column {
-                    width: listView.width
-                    spacing: 4
-
-                    Text {
-                        width: parent.width
-                        text: model.message
-                        color: Theme.color.bluepurple1
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: 14
-                    }
-                    Text {
-                        width: parent.width
-                        text: "%1 — %2".arg(model.author).arg(model.date)
-                        color: Theme.color.bluepurple3
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: 12
-                    }
-
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        color: Theme.color.bluepurple5
-                        visible: index < listView.count - 1
-                    }
-                }
+            Text {
+                width: parent.width
+                text: qsTr("First Release")
+                color: Theme.color.bluepurple1
+                wrapMode: Text.WordWrap
+                font.pixelSize: 18
+                font.bold: true
             }
-        }
 
-        Label {
-            anchors.centerIn: parent
-            visible: !Backend.arfCommitsRefreshing && listView.count === 0
-            text: qsTr("No data (check your internet connection)")
-            color: Theme.color.bluepurple2
-            wrapMode: Text.WordWrap
-            width: parent.width - 20
-            horizontalAlignment: Text.AlignHCenter
+            Text {
+                width: parent.width
+                text: qsTr("OmniCore LAST DEV build")
+                color: Theme.color.bluepurple2
+                wrapMode: Text.WordWrap
+                font.pixelSize: 13
+            }
+
+            Text {
+                width: parent.width
+                text: qsTr("Stability fixes, clean branding, secure web installer delivery.")
+                color: Theme.color.bluepurple3
+                wrapMode: Text.WordWrap
+                font.pixelSize: 12
+            }
         }
     }
 }

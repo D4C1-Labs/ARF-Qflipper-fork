@@ -1,9 +1,9 @@
 """
 Rebuild application/assets/icons/qFlipper.ico and qFlipper.png.
 
-- Optional master: qFlipper_source.png (if present, used as input instead of qFlipper.png) so you can keep a clean source in git.
-- Smooth ARF recolor, soft vertical gradient, light color/contrast boost.
-- ICO: PNG-encoded multi-resolution (needs a 256×256 master for Pillow to embed all sizes).
+- Optional master: qFlipper_source.png (if present, used as input instead of qFlipper.png).
+- Enforces neutral grayscale OmniCore icon styling (no red tint).
+- ICO: PNG-encoded multi-resolution (needs a 256x256 master for Pillow to embed all sizes).
 
 Requires Pillow. Run: python tools/rebuild_ico_from_png.py
 """
@@ -12,7 +12,7 @@ from __future__ import annotations
 import os
 import sys
 
-from PIL import Image, ImageEnhance, ImageFilter
+from PIL import Image, ImageEnhance, ImageFilter, ImageOps
 
 
 def _lerp(a: float, b: float, t: float) -> float:
@@ -26,29 +26,12 @@ def _smoothstep(edge0: float, edge1: float, x: float) -> float:
     return t * t * (3.0 - 2.0 * t)
 
 
-def derpurple_smooth(img: Image.Image) -> Image.Image:
-    """Blend blue/lavender UI tones toward ARF red."""
+def to_grayscale_preserve_alpha(img: Image.Image) -> Image.Image:
     img = img.convert("RGBA")
-    px = img.load()
-    w, h = img.size
-    ar = (210, 52, 48)
-    for y in range(h):
-        for x in range(w):
-            r, g, b, a = px[x, y]
-            if a < 6:
-                continue
-            cold = max(0.0, (b - max(r, g)) / 85.0)
-            lav = max(0.0, min(1.0, (r + g + b) / 750.0)) * max(0.0, (b - 130) / 90.0)
-            s = _smoothstep(0.0, 1.0, min(1.0, cold * 1.15 + lav * 1.1))
-            if s <= 0.001:
-                continue
-            lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0
-            lum = max(0.15, min(1.0, lum))
-            tr = int(_lerp(r, ar[0] * lum, s))
-            tg = int(_lerp(g, ar[1] * lum * 0.95, s))
-            tb = int(_lerp(b, ar[2] * lum * 0.85, s))
-            px[x, y] = (max(0, min(255, tr)), max(0, min(255, tg)), max(0, min(255, tb)), a)
-    return img
+    alpha = img.getchannel("A")
+    gray = ImageOps.grayscale(img.convert("RGB"))
+    gray = ImageEnhance.Contrast(gray).enhance(1.18)
+    return Image.merge("RGBA", (gray, gray, gray, alpha))
 
 
 def gradient_background_rgba(
@@ -74,11 +57,7 @@ def composite_on_bg(img_rgba: Image.Image, bg_rgba: Image.Image) -> Image.Image:
 
 
 def build_master(src_rgba: Image.Image) -> Image.Image:
-    img = derpurple_smooth(src_rgba)
-    bg = gradient_background_rgba(img.size)
-    out = composite_on_bg(img, bg)
-    out = ImageEnhance.Color(out).enhance(1.06)
-    out = ImageEnhance.Contrast(out).enhance(1.04)
+    out = to_grayscale_preserve_alpha(src_rgba)
     return out.convert("RGBA")
 
 

@@ -28,7 +28,7 @@ ItemDelegate {
 
             color: text === "development" ? Theme.color.channelTagDev :
                 text === "release" ? Theme.color.lightgreen :
-                text === "arf" ? Theme.color.lightred4 : Theme.color.lightorange2
+                text === "arf" ? Theme.color.bluepurple2 : Theme.color.lightorange2
         }
 
         TextLabel {
