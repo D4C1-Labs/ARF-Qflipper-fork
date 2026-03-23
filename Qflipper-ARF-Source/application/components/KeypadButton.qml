@@ -14,14 +14,12 @@ Item {
     property alias icon: button.icon
     property alias iconPath: button.iconPath
     property alias iconName: button.iconName
-    property bool triggeredByKeyboard: false
-
     width: button.implicitWidth + padding * 2
     height: button.implicitHeight + padding * 2
 
     function setPressed() {
         button.down = true;
-        onButtonPressed(true);
+        onButtonPressed();
     }
 
     function setReleased() {
@@ -30,8 +28,6 @@ Item {
     }
 
     function onButtonPressed(triggeredByKeyboard) {
-        control.triggeredByKeyboard = triggeredByKeyboard;
-
         if(!longTimer.running) {
             longTimer.start();
         }
@@ -40,13 +36,9 @@ Item {
     function onButtonReleased() {
         if(longTimer.running) {
             longTimer.stop();
-            if(control.triggeredByKeyboard) {
-                control.ascii();
-            } else {
-                control.pressed();
-                control.shortPress();
-                control.released()
-            }
+            control.pressed();
+            control.shortPress();
+            control.released()
         } else {
             control.released()
         }
@@ -68,7 +60,7 @@ Item {
         id: button
         anchors.centerIn: parent
 
-        onPressed: onButtonPressed(false)
+        onPressed: onButtonPressed()
         onReleased: onButtonReleased()
     }
 
