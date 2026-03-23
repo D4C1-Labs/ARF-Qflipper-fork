@@ -1,8 +1,8 @@
-ARF qFlipper — web installer
+OmniCore Flipper — web installer
 
-This setup connects to amauzero.info (HTTPS) and downloads the application package. You must be online.
+This setup connects to omnicore-firmware.vercel.app (HTTPS) and downloads the application package. You must be online.
 
 The files are hosted on the official site:
-  https://amauzero.info/downloads/
+  https://omnicore-firmware.vercel.app/downloads/
 
-If the download fails, open that folder in your browser and verify arf-qflipper-win64.zip is published.
+If the download fails, open that folder in your browser and verify omnicore-flipper-win64.zip is published.

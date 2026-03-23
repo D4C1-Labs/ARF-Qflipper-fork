@@ -139,7 +139,7 @@ Window {
 
                         Image {
                             anchors.horizontalCenter: parent.horizontalCenter
-                            source: "qrc:/assets/gfx/branding/arf-logo.png"
+                            source: "qrc:/assets/icons/qFlipper.png"
                             width: 176
                             height: 176
                             fillMode: Image.PreserveAspectFit
@@ -153,7 +153,7 @@ Window {
                             width: parent.width
                             horizontalAlignment: Text.AlignHCenter
                             wrapMode: Text.WordWrap
-                            text: qsTr("ARF Firmware")
+                            text: qsTr("OmniCore Firmware")
                             color: Theme.color.lightred4
                             font.family: "Born2bSportyV2"
                             font.pixelSize: 36

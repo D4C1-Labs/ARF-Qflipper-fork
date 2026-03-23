@@ -1,4 +1,4 @@
-NAME = qFlipper
+NAME = OmniCore-Flipper
 
 equals(QT_MAJOR_VERSION, 6): QT += core5compat
 

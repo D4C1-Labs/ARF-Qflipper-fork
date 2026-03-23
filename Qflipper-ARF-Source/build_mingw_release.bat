@@ -17,7 +17,7 @@ if errorlevel 1 exit /b 1
 "%MINGW_BIN%\mingw32-make.exe" -j8
 if errorlevel 1 exit /b 1
 
-"%QTDIR%\bin\windeployqt.exe" --qmldir "%~dp0application\imports" --release qFlipper.exe
+"%QTDIR%\bin\windeployqt.exe" --qmldir "%~dp0application\imports" --release OmniCore-Flipper.exe
 if errorlevel 1 exit /b 1
 
 rem windeployqt often omits QML plugins/DLL deps; merge full QML tree + Qt6 DLLs so the app actually starts.
@@ -25,5 +25,5 @@ xcopy /E /Y /I "%QTDIR%\qml\*" "%CD%\qml\" >nul
 copy /Y "%QTDIR%\bin\Qt6*.dll" "%CD%\" >nul
 
 echo.
-echo OK: qFlipper.exe (and Qt runtime) in: %CD%
+echo OK: OmniCore-Flipper.exe (and Qt runtime) in: %CD%
 exit /b 0

@@ -16,7 +16,7 @@ Item {
 
         TextLabel {
             id: titleLabel
-            text: qsTr("ARF Firmware")
+            text: qsTr("OmniCore Firmware")
             font.family: "Born2bSportyV2"
             font.pixelSize: 26
             color: Theme.color.lightred4
@@ -31,7 +31,7 @@ Item {
 
         TextLabel {
             id: subtitle1
-            text: qsTr("Custom qFlipper Build")
+            text: qsTr("Custom OmniCore-Flipper Build")
             font.pixelSize: 14
             color: Theme.color.bluepurple2
             horizontalAlignment: Text.AlignHCenter
@@ -43,7 +43,7 @@ Item {
         }
 
         TextLabel {
-            text: qsTr("Made By Amau_Zero for ARF Firmware")
+            text: qsTr("Made By Amau_Zero for OmniCore Firmware")
             font.pixelSize: 12
             color: Theme.color.bluepurple1
             wrapMode: Text.WordWrap

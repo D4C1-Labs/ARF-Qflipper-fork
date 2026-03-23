@@ -29,7 +29,7 @@ python "%~dp0tools\rebuild_ico_from_png.py"
 if errorlevel 1 exit /b 1
 
 echo === Force Windows .ico resource relink ===
-del /f /q "%~dp0build-mingw\application\qFlipper_resource_res.o" 2>nul
+del /f /q "%~dp0build-mingw\application\OmniCore-Flipper_resource_res.o" 2>nul
 
 echo === Building Release ===
 if not exist build-mingw mkdir build-mingw
@@ -42,36 +42,37 @@ popd
 
 echo === windeployqt ===
 pushd build-mingw
-"%QTDIR%\bin\windeployqt.exe" --qmldir "..\application\imports" --release "qFlipper.exe"
+"%QTDIR%\bin\windeployqt.exe" --qmldir "..\application\imports" --release "OmniCore-Flipper.exe"
 if errorlevel 1 popd & exit /b 1
-"%QTDIR%\bin\windeployqt.exe" --release "qFlipper-cli.exe"
+"%QTDIR%\bin\windeployqt.exe" --release "OmniCore-Flipper-cli.exe"
 if errorlevel 1 popd & exit /b 1
 echo === Full QML tree + Qt6 DLLs (ARF deploy) ===
 xcopy /E /Y /I "%QTDIR%\qml\*" "%CD%\qml\" >nul
 copy /Y "%QTDIR%\bin\Qt6*.dll" "%CD%\" >nul
 popd
 
-echo === Staging dist\ARF-qFlipper (no build trees) ===
-if exist dist\ARF-qFlipper rmdir /s /q dist\ARF-qFlipper
-mkdir dist\ARF-qFlipper 2>nul
-robocopy build-mingw dist\ARF-qFlipper /E /XD application backend cli dfu 3rdparty "plugins\flipperproto0" "plugins\protobufinterface" /XF Makefile .qmake.stash libflipperproto0.a /NFL /NDL /NJH /NJS /nc /ns /np
+echo === Staging dist\OmniCore-Flipper (no build trees) ===
+if exist dist\OmniCore-Flipper rmdir /s /q dist\OmniCore-Flipper
+mkdir dist\OmniCore-Flipper 2>nul
+robocopy build-mingw dist\OmniCore-Flipper /E /XD application backend cli dfu 3rdparty "plugins\flipperproto0" "plugins\protobufinterface" /XF Makefile .qmake.stash libflipperproto0.a /NFL /NDL /NJH /NJS /nc /ns /np
 set RC=%ERRORLEVEL%
 if %RC% GEQ 8 (
   echo ERROR: robocopy failed with code %RC%
   exit /b 1
 )
+del /f /q "dist\OmniCore-Flipper\qFlipper.exe" "dist\OmniCore-Flipper\qFlipper-cli.exe" "dist\OmniCore-Flipper\qFlipper.ico" 2>nul
 
 rem Standalone .ico next to exe — Windows shortcuts use IconIndex into the PE; index 0 can show the wrong
 rem icon (violet) while the file icon is correct. Shortcuts reference this file instead of qFlipper.exe.
-copy /Y "%~dp0application\assets\icons\qFlipper.ico" "%~dp0dist\ARF-qFlipper\qFlipper.ico" >nul
+copy /Y "%~dp0application\assets\icons\qFlipper.ico" "%~dp0dist\OmniCore-Flipper\OmniCore-Flipper.ico" >nul
 if errorlevel 1 (
-  echo ERROR: could not copy qFlipper.ico into dist\ARF-qFlipper
+  echo ERROR: could not copy icon into dist\OmniCore-Flipper
   exit /b 1
 )
 
 echo === ZIP for web hosting (installer downloads this) ===
-if exist dist\arf-qflipper-win64.zip del /f /q dist\arf-qflipper-win64.zip
-tar -a -cf "dist\arf-qflipper-win64.zip" -C "dist\ARF-qFlipper" .
+if exist dist\omnicore-flipper-win64.zip del /f /q dist\omnicore-flipper-win64.zip
+tar -a -cf "dist\omnicore-flipper-win64.zip" -C "dist\OmniCore-Flipper" .
 if errorlevel 1 (
   echo ERROR: tar zip failed
   exit /b 1
@@ -79,7 +80,7 @@ if errorlevel 1 (
 
 if exist "%~dp0..\amau-zero-hub\public\downloads" (
   echo === Copying build artifacts to amau-zero-hub\public\downloads ===
-  copy /Y "dist\arf-qflipper-win64.zip" "%~dp0..\amau-zero-hub\public\downloads\"
+  copy /Y "dist\omnicore-flipper-win64.zip" "%~dp0..\amau-zero-hub\public\downloads\"
 )
 
 echo === Inno branding BMPs ===
@@ -94,13 +95,13 @@ if errorlevel 1 exit /b 1
 
 if exist "%~dp0..\amau-zero-hub\public\downloads" (
   echo === Copying installers to amau-zero-hub\public\downloads ===
-  copy /Y "dist\ARF-qFlipper-Setup.exe" "%~dp0..\amau-zero-hub\public\downloads\" 2>nul
-  copy /Y "dist\ARF-qFlipper-Full-Setup.exe" "%~dp0..\amau-zero-hub\public\downloads\" 2>nul
+  copy /Y "dist\OmniCore-Flipper-Setup.exe" "%~dp0..\amau-zero-hub\public\downloads\" 2>nul
+  copy /Y "dist\OmniCore-Flipper-Full-Setup.exe" "%~dp0..\amau-zero-hub\public\downloads\" 2>nul
 )
 
 echo.
 echo OK:
-echo   dist\ARF-qFlipper-Setup.exe   ^(web — set DownloadURL in installer\ARF-qFlipper-Web.iss^)
-echo   dist\ARF-qFlipper-Full-Setup.exe
-echo   dist\arf-qflipper-win64.zip   ^(upload to your site: /downloads/arf-qflipper-win64.zip^)
+echo   dist\OmniCore-Flipper-Setup.exe   ^(web — set DownloadURL in installer\ARF-qFlipper-Web.iss^)
+echo   dist\OmniCore-Flipper-Full-Setup.exe
+echo   dist\omnicore-flipper-win64.zip   ^(upload to your site: /downloads/omnicore-flipper-win64.zip^)
 exit /b 0

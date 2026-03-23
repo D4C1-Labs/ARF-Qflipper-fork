@@ -1,11 +1,11 @@
-; Offline / full bundle: packs dist\ARF-qFlipper (run build_installer.bat first).
+; Offline / full bundle: packs dist\OmniCore-Flipper (run build_installer.bat first).
 
-#define MyAppName "ARF qFlipper"
-#define MyAppNameShort "ARFqFlipper"
-#define MyAppExeName "qFlipper.exe"
-#define MyAppPublisher "ARF Firmware / Amau_Zero"
+#define MyAppName "OmniCore Flipper"
+#define MyAppNameShort "OmniCoreFlipper"
+#define MyAppExeName "OmniCore-Flipper.exe"
+#define MyAppPublisher "OmniCore Firmware / Amau_Zero"
 #define MyAppURL "https://amauzero.info"
-#define DistDir "..\\dist\\ARF-qFlipper"
+#define DistDir "..\\dist\\OmniCore-Flipper"
 
 [Setup]
 AppId={{C4A91F3E-8B2D-4E61-9F0A-1D2E3F4A5B6C}
@@ -21,21 +21,21 @@ AllowNoIcons=yes
 InfoBeforeFile=installer_info_full_en.txt
 LicenseFile=..\LICENSE
 OutputDir=..\dist
-OutputBaseFilename=ARF-qFlipper-Full-Setup
+OutputBaseFilename=OmniCore-Flipper-Full-Setup
 SetupIconFile=..\application\assets\icons\qFlipper.ico
 Compression=lzma2/max
 SolidCompression=yes
 PrivilegesRequired=admin
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64
-UninstallDisplayIcon={app}\qFlipper.ico
+UninstallDisplayIcon={app}\OmniCore-Flipper.ico
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
 SetupLogging=yes
 WizardStyle=modern
-WizardImageFile=arf_wizard_large.bmp
+WizardImageFile=omnicore_wizard_large.bmp
 WizardImageStretch=no
-WizardSmallImageFile=arf_wizard_small.bmp
+WizardSmallImageFile=omnicore_wizard_small.bmp
 WizardImageBackColor=$060610
 ShowLanguageDialog=yes
 LanguageDetectionMethod=none
@@ -80,9 +80,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "{#DistDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"; IconFilename: "{app}\qFlipper.ico"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"; IconFilename: "{app}\OmniCore-Flipper.ico"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; WorkingDir: "{app}"; IconFilename: "{app}\qFlipper.ico"
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; WorkingDir: "{app}"; IconFilename: "{app}\OmniCore-Flipper.ico"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#MyAppName}}"; Flags: nowait postinstall skipifsilent

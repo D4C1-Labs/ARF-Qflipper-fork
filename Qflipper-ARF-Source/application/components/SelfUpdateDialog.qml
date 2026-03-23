@@ -11,7 +11,7 @@ CustomDialog {
     closable: App.updater.state === ApplicationUpdater.ErrorOccured
     closePolicy: Popup.NoAutoClose
 
-    title: App.updater.state === ApplicationUpdater.Idle ? qsTr("Update qFlipper?") : qsTr("Updating qFlipper")
+    title: App.updater.state === ApplicationUpdater.Idle ? qsTr("Update OmniCore-Flipper?") : qsTr("Updating OmniCore-Flipper")
 
     contentWidget: Item {
         implicitWidth: 430
@@ -26,7 +26,7 @@ CustomDialog {
                 visible: App.updater.state === ApplicationUpdater.Idle
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                text: qsTr("Newer version of qFlipper<br/>will be installed")
+                text: qsTr("Newer version of OmniCore-Flipper<br/>will be installed")
 
                 lineHeight: 1.4
                 wrapMode: Text.Wrap

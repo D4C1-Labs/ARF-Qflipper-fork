@@ -1,14 +1,14 @@
 ; Web installer: downloads the portable bundle ZIP from your site, then extracts to {app}.
 ; 1) Edit #define DownloadURL below to your deployed URL (same host as public/downloads/... in amau-zero-hub).
-; 2) Run build_installer.bat — it builds arf-qflipper-win64.zip and can copy it to the site public folder.
+; 2) Run build_installer.bat — it builds omnicore-flipper-win64.zip and can copy it to the site public folder.
 
-#define MyAppName "ARF qFlipper"
-#define MyAppNameShort "ARFqFlipper"
-#define MyAppExeName "qFlipper.exe"
-#define MyAppPublisher "ARF Firmware / Amau_Zero"
+#define MyAppName "OmniCore Flipper"
+#define MyAppNameShort "OmniCoreFlipper"
+#define MyAppExeName "OmniCore-Flipper.exe"
+#define MyAppPublisher "OmniCore Firmware / Amau_Zero"
 ; Production site (HTTPS). ZIP must exist at this URL after deploy (public/downloads).
 #define MyAppURL "https://amauzero.info"
-#define DownloadURL "https://amauzero.info/downloads/arf-qflipper-win64.zip"
+#define DownloadURL "https://omnicore-firmware.vercel.app/downloads/omnicore-flipper-win64.zip"
 
 [Setup]
 AppId={{C4A91F3E-8B2D-4E61-9F0A-1D2E3F4A5B6C}
@@ -24,22 +24,22 @@ AllowNoIcons=yes
 InfoBeforeFile=installer_info_web_en.txt
 LicenseFile=..\LICENSE
 OutputDir=..\dist
-OutputBaseFilename=ARF-qFlipper-Setup
+OutputBaseFilename=OmniCore-Flipper-Setup
 SetupIconFile=..\application\assets\icons\qFlipper.ico
 Compression=lzma2/max
 SolidCompression=yes
 PrivilegesRequired=admin
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64
-UninstallDisplayIcon={app}\qFlipper.ico
+UninstallDisplayIcon={app}\OmniCore-Flipper.ico
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
 SetupLogging=yes
 ; Inno 6.7+ ignores BackColor on modern wizard — dark look comes from BMPs + system theme.
 WizardStyle=modern
-WizardImageFile=arf_wizard_large.bmp
+WizardImageFile=omnicore_wizard_large.bmp
 WizardImageStretch=no
-WizardSmallImageFile=arf_wizard_small.bmp
+WizardSmallImageFile=omnicore_wizard_small.bmp
 WizardImageBackColor=$060610
 ShowLanguageDialog=yes
 LanguageDetectionMethod=none
@@ -86,12 +86,12 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "arf_web_download.ps1"; Flags: dontcopy
 ; Same .ico as in the ZIP — also installed after download so shortcuts never bind to the wrong PE icon index.
-Source: "..\application\assets\icons\qFlipper.ico"; DestDir: "{app}"; DestName: "qFlipper.ico"; Flags: ignoreversion
+Source: "..\application\assets\icons\qFlipper.ico"; DestDir: "{app}"; DestName: "OmniCore-Flipper.ico"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"; IconFilename: "{app}\qFlipper.ico"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; WorkingDir: "{app}"; IconFilename: "{app}\OmniCore-Flipper.ico"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; WorkingDir: "{app}"; IconFilename: "{app}\qFlipper.ico"
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; WorkingDir: "{app}"; IconFilename: "{app}\OmniCore-Flipper.ico"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#MyAppName}}"; Flags: nowait postinstall skipifsilent

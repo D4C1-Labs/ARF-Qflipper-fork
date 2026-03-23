@@ -9,7 +9,7 @@ CustomDialog {
 
     closable: true
     invertTitle: true
-    title: qsTr("ARF Firmware — commit history")
+    title: qsTr("OmniCore Firmware — commit history")
 
     onOpened: Backend.refreshArfCommitLog()
 

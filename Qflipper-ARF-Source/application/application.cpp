@@ -31,7 +31,7 @@ Application::Application(int &argc, char **argv):
     m_isDeveloperMode(QGuiApplication::queryKeyboardModifiers() & Qt::KeyboardModifier::AltModifier),
     m_updateStatus(UpdateStatus::NoUpdates)
 {
-    QGuiApplication::setApplicationDisplayName(QStringLiteral("ARF Firmware"));
+    QGuiApplication::setApplicationDisplayName(QStringLiteral("OmniCore Firmware"));
 
     if(isRunning()) {
         sendMessage(QStringLiteral("IT'S ME."));

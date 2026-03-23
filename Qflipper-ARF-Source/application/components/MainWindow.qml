@@ -130,7 +130,7 @@ Item {
     }
 
     TextLabel {
-        id: arfEditionLabel
+        id: omniEditionLabel
         x: bg.border.width + 8
         y: bg.border.width - font.pixelSize / 2 + 18
         z: 2
@@ -142,7 +142,7 @@ Item {
         font.pixelSize: 34
         capitalized: false
 
-        text: "ARF Firmware"
+        text: "OmniCore Firmware"
     }
 
     WindowControls {

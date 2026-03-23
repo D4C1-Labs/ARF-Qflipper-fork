@@ -1,5 +1,5 @@
 """
-Generate BMP side images for Inno Setup (ARF dark-red theme).
+Generate BMP side images for Inno Setup (OmniCore dark theme).
 Requires Pillow: pip install pillow
 """
 from __future__ import annotations
@@ -22,13 +22,13 @@ def make_large(path: str, w: int = 164, h: int = 314) -> None:
     pix = img.load()
     for y in range(h):
         t = y / max(h - 1, 1)
-        # Dark red / near-black (sidebar reads as “dark theme” next to Windows)
+        # Neutral dark gray / near-black for a modern OmniCore look.
         base = (int(8 + t * 22), int(3 + t * 10), int(3 + t * 10))
         for x in range(w):
             pix[x, y] = _grid_tint(x, y, base)
     d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, w - 1, h - 1], outline=(160, 45, 45), width=2)
-    d.line([8, 96, w - 8, 96], fill=(90, 30, 30), width=1)
+    d.rectangle([0, 0, w - 1, h - 1], outline=(120, 120, 120), width=2)
+    d.line([8, 96, w - 8, 96], fill=(78, 78, 78), width=1)
     font_title = None
     font_sub = None
     for name, size in (("segoeuib.ttf", 22), ("arialbd.ttf", 20), ("arial.ttf", 18)):
@@ -47,9 +47,9 @@ def make_large(path: str, w: int = 164, h: int = 314) -> None:
         font_title = ImageFont.load_default()
     if font_sub is None:
         font_sub = ImageFont.load_default()
-    d.text((10, 108), "ARF", fill=(255, 95, 95), font=font_title)
-    d.text((10, 138), "Firmware", fill=(255, 228, 228), font=font_sub)
-    d.text((10, 248), "qFlipper", fill=(230, 170, 170), font=font_sub)
+    d.text((10, 108), "OmniCore", fill=(232, 232, 232), font=font_title)
+    d.text((10, 138), "Firmware", fill=(210, 210, 210), font=font_sub)
+    d.text((10, 248), "Installer", fill=(170, 170, 170), font=font_sub)
     img.save(path, "BMP")
 
 
@@ -58,21 +58,21 @@ def make_small(path: str, w: int = 55, h: int = 58) -> None:
     pix = img.load()
     for y in range(h):
         for x in range(w):
-            pix[x, y] = _grid_tint(x, y, (22, 8, 8))
+            pix[x, y] = _grid_tint(x, y, (20, 20, 20))
     d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, w - 1, h - 1], outline=(200, 60, 60), width=1)
+    d.rectangle([0, 0, w - 1, h - 1], outline=(150, 150, 150), width=1)
     try:
         f = ImageFont.truetype(os.path.join(os.environ.get("WINDIR", "C:\\Windows"), "Fonts", "segoeuib.ttf"), 14)
     except OSError:
         f = ImageFont.load_default()
-    d.text((4, 18), "ARF", fill=(255, 80, 80), font=f)
+    d.text((4, 18), "OCF", fill=(235, 235, 235), font=f)
     img.save(path, "BMP")
 
 
 def main() -> int:
     here = os.path.dirname(os.path.abspath(__file__))
-    large = os.path.join(here, "arf_wizard_large.bmp")
-    small = os.path.join(here, "arf_wizard_small.bmp")
+    large = os.path.join(here, "omnicore_wizard_large.bmp")
+    small = os.path.join(here, "omnicore_wizard_small.bmp")
     make_large(large)
     make_small(small)
     print("Wrote:", large)

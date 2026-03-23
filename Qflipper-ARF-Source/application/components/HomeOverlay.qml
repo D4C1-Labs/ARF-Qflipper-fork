@@ -336,10 +336,10 @@ AbstractOverlay {
                         githubImg.opacity = 0.5;
                     }
                 }
-                onClicked:  Qt.openUrlExternally("https://github.com/D4C1-Labs/Flipper-ARF")
+                onClicked:  Qt.openUrlExternally("https://omnicore-firmware.vercel.app")
             }
             ToolTip {
-                text: qsTr("ARF Firmware GitHub repository")
+                text: qsTr("OmniCore Firmware website")
                 visible: githubArea.containsMouse
                 delay: 750
                 y: parent.height + 7 // fix y position
@@ -381,10 +381,10 @@ AbstractOverlay {
                         websiteImg.opacity = 0.5;
                     }
                 }
-                onClicked:  Qt.openUrlExternally("https://arf.d4c1.com/")
+                onClicked:  Qt.openUrlExternally("https://omnicore-firmware.vercel.app")
             }
             ToolTip {
-                text: qsTr("ARF Firmware website")
+                text: qsTr("OmniCore Firmware website")
                 visible: websiteArea.containsMouse
                 delay: 750
                 y: parent.height + 7 // fix y position
@@ -439,7 +439,7 @@ AbstractOverlay {
             } else if(Preferences.updateChannel === "release") {
                 str = "Release";
             } else if(Preferences.updateChannel === "arf") {
-                str = "ARF";
+                str = "Omni";
             } else {
                 str = Preferences.updateChannel.replace(/^pr\d+:/, '');
             }
