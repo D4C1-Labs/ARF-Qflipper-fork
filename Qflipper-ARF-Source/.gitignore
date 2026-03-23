@@ -1,0 +1,11 @@
+/build_mac
+build
+build-mingw
+dist
+installer/arf_wizard_*.bmp
+.directory
+*.user
+x64
+Win32
+.vs
+.DS_Store

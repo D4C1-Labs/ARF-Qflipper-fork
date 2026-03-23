@@ -1,0 +1,8 @@
+ARF qFlipper — web installer
+
+This setup connects to amauzero.info (HTTPS) and downloads the application package. You must be online.
+
+The files are hosted on the official site:
+  https://amauzero.info/downloads/
+
+If the download fails, open that folder in your browser and verify arf-qflipper-win64.zip is published.
