@@ -46,9 +46,7 @@ pushd build-mingw
 if errorlevel 1 popd & exit /b 1
 "%QTDIR%\bin\windeployqt.exe" --release "OmniCore-Flipper-cli.exe"
 if errorlevel 1 popd & exit /b 1
-echo === Full QML tree + Qt6 DLLs (ARF deploy) ===
-xcopy /E /Y /I "%QTDIR%\qml\*" "%CD%\qml\" >nul
-copy /Y "%QTDIR%\bin\Qt6*.dll" "%CD%\" >nul
+echo === Runtime slimming enabled (faster web setup download) ===
 popd
 
 echo === Staging dist\OmniCore-Flipper (no build trees) ===
@@ -101,7 +99,7 @@ if exist "%~dp0..\amau-zero-hub\public\downloads" (
 
 echo.
 echo OK:
-echo   dist\OmniCore-Flipper-Setup.exe   ^(web — set DownloadURL in installer\ARF-qFlipper-Web.iss^)
+echo   dist\OmniCore-Flipper-Setup.exe   ^(web/online installer^)
 echo   dist\OmniCore-Flipper-Full-Setup.exe
 echo   dist\omnicore-flipper-win64.zip   ^(upload to your site: /downloads/omnicore-flipper-win64.zip^)
 exit /b 0
