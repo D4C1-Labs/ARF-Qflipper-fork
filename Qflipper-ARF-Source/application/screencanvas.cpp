@@ -8,9 +8,9 @@
 
 ScreenCanvas::ScreenCanvas(QQuickItem *parent):
     QQuickPaintedItem(parent),
-    /* ARF defaults until QML binds Theme colors (avoids black/white flash read as “blue” on some displays). */
-    m_foreground(QColor(0x4a, 0x10, 0x10)),
-    m_background(QColor(0xe8, 0xb8, 0xb8)),
+    /* Neutral gray defaults until QML binds Theme colors. */
+    m_foreground(QColor(0x3e, 0x46, 0x51)),
+    m_background(QColor(0xe0, 0xe5, 0xec)),
     m_canvas(QImage(1, 1, QImage::Format_RGB32)),
     m_zoomFactor(1.0),
     m_orientation(Qt::LandscapeOrientation)

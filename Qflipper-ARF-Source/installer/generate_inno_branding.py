@@ -14,7 +14,8 @@ def _grid_tint(x: int, y: int, base: tuple[int, int, int]) -> tuple[int, int, in
     g = ((x // 10) + (y // 10)) % 2
     bump = 10 if g else 0
     r, gr, b = base
-    return (min(255, r + bump), min(255, gr + bump // 2), min(255, b + bump // 2))
+    v = min(255, int((r + gr + b) / 3) + bump)
+    return (v, v, v)
 
 
 def make_large(path: str, w: int = 164, h: int = 314) -> None:
@@ -23,7 +24,8 @@ def make_large(path: str, w: int = 164, h: int = 314) -> None:
     for y in range(h):
         t = y / max(h - 1, 1)
         # Neutral dark gray / near-black for a modern OmniCore look.
-        base = (int(8 + t * 22), int(3 + t * 10), int(3 + t * 10))
+        v = int(20 + t * 28)
+        base = (v, v, v)
         for x in range(w):
             pix[x, y] = _grid_tint(x, y, base)
     d = ImageDraw.Draw(img)

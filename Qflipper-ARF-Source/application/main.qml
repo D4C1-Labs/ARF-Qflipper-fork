@@ -89,11 +89,11 @@ Window {
                     anchors.fill: parent
                     anchors.margins: parent.border.width
                     radius: Math.max(0, parent.radius - parent.border.width)
-                    color: "#161010"
+                    color: "#151a20"
 
                     gradient: Gradient {
-                        GradientStop { position: 0; color: "#181010" }
-                        GradientStop { position: 1; color: "#241414" }
+                        GradientStop { position: 0; color: "#1a2027" }
+                        GradientStop { position: 1; color: "#252d37" }
                     }
 
                     Canvas {
@@ -106,7 +106,7 @@ Window {
                             const cellSize = width / numCells;
                             const ctx = getContext("2d");
                             ctx.reset();
-                            ctx.strokeStyle = "#6a2828";
+                            ctx.strokeStyle = "#4f5966";
                             ctx.lineWidth = 2;
                             for (let ypos = cellSize; ypos < height; ypos += cellSize) {
                                 const pos = Math.floor(ypos);
