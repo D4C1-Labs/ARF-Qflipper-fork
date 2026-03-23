@@ -86,3 +86,74 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#MyAppName}}"; Flags: nowait postinstall skipifsilent
+
+[Code]
+function IsOriginalQFlipperName(const DisplayName: String): Boolean;
+var
+  NameLower: String;
+begin
+  NameLower := Lowercase(DisplayName);
+  Result := (Pos('qflipper', NameLower) > 0) and (Pos('arf', NameLower) = 0);
+end;
+
+function TryReadUninstallCmd(const RootKey: Integer; const SubKey: String; var UninstallCmd: String): Boolean;
+begin
+  Result := False;
+  if RegQueryStringValue(RootKey, SubKey, 'QuietUninstallString', UninstallCmd) and (Trim(UninstallCmd) <> '') then
+  begin
+    Result := True;
+    Exit;
+  end;
+
+  if RegQueryStringValue(RootKey, SubKey, 'UninstallString', UninstallCmd) and (Trim(UninstallCmd) <> '') then
+    Result := True;
+end;
+
+function FindOriginalQFlipperUninstaller(var UninstallCmd: String): Boolean;
+var
+  Keys: TArrayOfString;
+  I: Integer;
+  BaseKey, DisplayName: String;
+begin
+  Result := False;
+  BaseKey := 'Software\Microsoft\Windows\CurrentVersion\Uninstall';
+
+  if RegGetSubkeyNames(HKLM64, BaseKey, Keys) then
+    for I := 0 to GetArrayLength(Keys) - 1 do
+      if RegQueryStringValue(HKLM64, BaseKey + '\' + Keys[I], 'DisplayName', DisplayName) and IsOriginalQFlipperName(DisplayName) and
+         TryReadUninstallCmd(HKLM64, BaseKey + '\' + Keys[I], UninstallCmd) then begin Result := True; Exit; end;
+
+  if RegGetSubkeyNames(HKLM32, BaseKey, Keys) then
+    for I := 0 to GetArrayLength(Keys) - 1 do
+      if RegQueryStringValue(HKLM32, BaseKey + '\' + Keys[I], 'DisplayName', DisplayName) and IsOriginalQFlipperName(DisplayName) and
+         TryReadUninstallCmd(HKLM32, BaseKey + '\' + Keys[I], UninstallCmd) then begin Result := True; Exit; end;
+
+  if RegGetSubkeyNames(HKCU64, BaseKey, Keys) then
+    for I := 0 to GetArrayLength(Keys) - 1 do
+      if RegQueryStringValue(HKCU64, BaseKey + '\' + Keys[I], 'DisplayName', DisplayName) and IsOriginalQFlipperName(DisplayName) and
+         TryReadUninstallCmd(HKCU64, BaseKey + '\' + Keys[I], UninstallCmd) then begin Result := True; Exit; end;
+
+  if RegGetSubkeyNames(HKCU32, BaseKey, Keys) then
+    for I := 0 to GetArrayLength(Keys) - 1 do
+      if RegQueryStringValue(HKCU32, BaseKey + '\' + Keys[I], 'DisplayName', DisplayName) and IsOriginalQFlipperName(DisplayName) and
+         TryReadUninstallCmd(HKCU32, BaseKey + '\' + Keys[I], UninstallCmd) then begin Result := True; Exit; end;
+end;
+
+function RunOriginalQFlipperUninstall(const UninstallCmd: String): Boolean;
+var
+  ResultCode: Integer;
+  CmdLine: String;
+begin
+  CmdLine := '/C ' + AddQuotes(UninstallCmd + ' /VERYSILENT /SUPPRESSMSGBOXES /NORESTART');
+  Result := Exec('cmd.exe', CmdLine, '', SW_HIDE, ewWaitUntilTerminated, ResultCode) and (ResultCode = 0);
+end;
+
+function PrepareToInstall(var NeedsRestart: Boolean): String;
+var
+  UninstallCmd: String;
+begin
+  Result := '';
+  if FindOriginalQFlipperUninstaller(UninstallCmd) then
+    if not RunOriginalQFlipperUninstall(UninstallCmd) then
+      Result := 'Unable to uninstall original qFlipper automatically. Please uninstall qFlipper and retry.';
+end;

@@ -78,7 +78,7 @@ void ScreenStreamer::setDevice(FlipperZero *device)
 
 void ScreenStreamer::sendInputEvent(InputEvent::Key key, InputEvent::Type type)
 {
-    if(!m_device || !m_device->rpc() || !m_device->rpc()->isSessionUp()) {
+    if(!m_device || !m_device->rpc()) {
         qCDebug(CATEGORY_SCREEN) << "Ignoring input event while device/session is unavailable";
         return;
     }
@@ -95,7 +95,7 @@ void ScreenStreamer::sendInputEvent(InputEvent::Key key, InputEvent::Type type)
 
 void ScreenStreamer::sendAsciiEvent(AsciiEvent::Value value)
 {
-    if(!m_device || !m_device->rpc() || !m_device->rpc()->isSessionUp()) {
+    if(!m_device || !m_device->rpc()) {
         qCDebug(CATEGORY_SCREEN) << "Ignoring ascii event while device/session is unavailable";
         return;
     }

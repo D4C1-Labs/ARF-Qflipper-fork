@@ -27,7 +27,7 @@ Item {
         onButtonReleased();
     }
 
-    function onButtonPressed(triggeredByKeyboard) {
+    function onButtonPressed() {
         if(!longTimer.running) {
             longTimer.start();
         }
