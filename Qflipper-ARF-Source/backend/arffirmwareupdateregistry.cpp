@@ -56,7 +56,7 @@ QByteArray ArfFirmwareUpdateRegistry::buildDirectoryJsonFromRelease(const QJsonO
 {
     Q_UNUSED(releaseObj);
     const qint64 ts = QDateTime::currentSecsSinceEpoch();
-    const QString tgzUrl = QStringLiteral("https://omnicore-firmware.vercel.app/api/package?file=firmware");
+    const QString tgzUrl = QStringLiteral("https://omnicore-firmware.vercel.app/downloads/OmniCore-firmware-update.tgz");
     const QString version = QStringLiteral("1.0");
     const QString body = QStringLiteral("OmniCore LAST DEV - First Release");
 
@@ -75,7 +75,7 @@ QByteArray ArfFirmwareUpdateRegistry::buildDirectoryJsonFromRelease(const QJsonO
     };
 
     QJsonObject channelObj{
-        { QStringLiteral("id"), QStringLiteral("arf") },
+        { QStringLiteral("id"), QStringLiteral("omnicore") },
         { QStringLiteral("title"), QStringLiteral("OmniCore LAST DEV") },
         { QStringLiteral("description"), QStringLiteral("Firmware delivered by omnicore-firmware.vercel.app") },
         { QStringLiteral("versions"), QJsonArray{ versionObj } },

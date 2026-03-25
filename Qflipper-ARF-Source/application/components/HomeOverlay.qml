@@ -271,7 +271,7 @@ AbstractOverlay {
                 return Theme.color.channelTagDev;
             } else if(Preferences.updateChannel === "release") {
                 return Theme.color.lightgreen;
-            } else if(Preferences.updateChannel === "arf") {
+            } else if(Preferences.updateChannel === "omnicore") {
                 return Theme.color.bluepurple2;
             } else {
                 return Theme.color.lightred2;
@@ -393,13 +393,13 @@ AbstractOverlay {
                 str = "Dev";
             } else if(Preferences.updateChannel === "release") {
                 str = "Release";
-            } else if(Preferences.updateChannel === "arf") {
+            } else if(Preferences.updateChannel === "omnicore") {
                 str = "Omni";
             } else {
                 str = Preferences.updateChannel.replace(/^pr\d+:/, '');
             }
 
-            if(Preferences.updateChannel === "arf") {
+            if(Preferences.updateChannel === "omnicore") {
                 return "OmniCore LAST DEV";
             }
             let splitVersion = Backend.latestFirmwareVersion.number.split("-");

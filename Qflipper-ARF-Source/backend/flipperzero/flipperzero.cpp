@@ -121,10 +121,10 @@ bool FlipperZero::canUpdate(const Updates::VersionInfo &versionInfo) const
         } else if(serverChannel == DEVELOPMENT) {
             return (deviceVersion != serverVersion) && (deviceDate <= serverDate);
         }
-    } else if(serverChannel == QStringLiteral("arf") || deviceChannel == QStringLiteral("arf")) {
+    } else if(serverChannel == QStringLiteral("omnicore") || deviceChannel == QStringLiteral("omnicore")) {
         if(deviceChannel == serverChannel) {
             return VersionInfo::compare(deviceVersion, serverVersion) < 0;
-        } else if(deviceChannel == RELEASE && serverChannel == QStringLiteral("arf")) {
+        } else if(deviceChannel == RELEASE && serverChannel == QStringLiteral("omnicore")) {
             return VersionInfo::compare(deviceVersion, serverVersion) < 0;
         }
     }

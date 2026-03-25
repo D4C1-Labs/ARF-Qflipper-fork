@@ -3,6 +3,9 @@
 #include <QDebug>
 #include <QDirIterator>
 #include <QLoggingCategory>
+#include <QFileInfo>
+#include <QRegularExpression>
+#include <QUrl>
 
 #include "flipperzero/devicestate.h"
 #include "flipperzero/utilityinterface.h"
@@ -23,9 +26,13 @@ Q_DECLARE_LOGGING_CATEGORY(CATEGORY_DEBUG)
 
 static inline const QString getBaseName(const QString &url)
 {
-    const auto start = url.lastIndexOf('/') + 1;
-    const auto end = url.lastIndexOf('.');
-    return url.mid(start, end - start);
+    const auto parsed = QUrl(url);
+    QString name = QFileInfo(parsed.path()).completeBaseName();
+    if(name.isEmpty()) {
+        name = QStringLiteral("omnicore-update");
+    }
+    name.replace(QRegularExpression(QStringLiteral(R"([^A-Za-z0-9._-])")), QStringLiteral("_"));
+    return name;
 }
 
 using namespace Flipper;

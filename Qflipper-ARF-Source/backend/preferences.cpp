@@ -16,11 +16,15 @@
 Preferences::Preferences(QObject *parent):
     QObject(parent)
 {
-    SET_DEFAULT_VALUE(FIRMWARE_UPDATE_CHANNEL_KEY, QStringLiteral("arf"));
+    SET_DEFAULT_VALUE(FIRMWARE_UPDATE_CHANNEL_KEY, QStringLiteral("omnicore"));
     SET_DEFAULT_VALUE(APPLICATION_UPDATE_CHANNEL_KEY, QStringLiteral("release"));
     SET_DEFAULT_VALUE(CHECK_APPLICATION_UPDATES_KEY, true);
     SET_DEFAULT_VALUE(SHOW_HIDDEN_FILES_KEY, false);
     SET_DEFAULT_VALUE(LAST_FOLDER_URL_KEY, QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+
+    if(m_settings.value(FIRMWARE_UPDATE_CHANNEL_KEY).toString() == QStringLiteral("arf")) {
+        m_settings.setValue(FIRMWARE_UPDATE_CHANNEL_KEY, QStringLiteral("omnicore"));
+    }
 }
 
 Preferences *Preferences::instance()
