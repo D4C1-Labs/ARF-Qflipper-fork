@@ -1,0 +1,9 @@
+[submodule "driver-tool/libwdi"]
+	path = driver-tool/libwdi
+	url = https://github.com/pbatard/libwdi.git
+[submodule "3rdparty/nanopb"]
+	path = 3rdparty/nanopb
+	url = https://github.com/nanopb/nanopb.git
+[submodule "plugins/flipperproto0/definitions"]
+	path = plugins/flipperproto0/definitions
+	url = https://github.com/Next-Flip/flipperzero-protobuf.git

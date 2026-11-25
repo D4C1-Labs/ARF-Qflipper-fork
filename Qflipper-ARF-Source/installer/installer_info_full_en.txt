@@ -1,0 +1,5 @@
+ARF Flipper — full offline installer
+
+This package includes all program files on disk (no download during install). You can install without internet.
+
+After installation, launch ARF Flipper from the Start menu or the optional desktop shortcut.

@@ -1,0 +1,8 @@
+ARF Flipper — web installer
+
+This setup connects to ARF-firmware.vercel.app (HTTPS) and downloads the application package. You must be online.
+
+The files are delivered through the official package endpoint:
+  https://ARF-firmware.vercel.app/api/package?file=windows
+
+If the download fails, check website availability and retry installation.
