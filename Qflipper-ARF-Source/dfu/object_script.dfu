@@ -1,0 +1,14 @@
+debug.o
+fusstate.o
+optionbytes.o
+stm32wb55.o
+dfumemorylayout.o
+dfusedevice.o
+dfusefile.o
+usbdeviceinfo.o
+usbdevice.o
+usbdevicedetector.o
+moc_stm32wb55.o
+moc_dfusedevice.o
+moc_usbdevice.o
+moc_usbdevicedetector.o
